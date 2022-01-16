@@ -33,6 +33,10 @@ Post.init(
         key: "id",
       },
     },
+    post_text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
   // Configure metadata
   {
