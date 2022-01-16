@@ -117,30 +117,32 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "No user found with this id" });
       return;
     }
-    res.json(updatedUser);
+    // res.json(updatedUser);
+    res.status(200).json(`User ${req.params.id} has been updated`);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-//
-router.delete("/:id", (req, res) => {
-  User.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((dbUserData) => {
-      if (!dbUserData) {
-        res.status(404).json({ message: "No user found with this id" });
-        return;
-      }
-      res.json(dbUserData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+// Delete user at api/users/:id
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedUser = await User.destroy({
+      where: {
+        id: req.params.id,
+      },
     });
+
+    if (!deletedUser) {
+      res.status(404).json({ message: "No user found with this id" });
+      return;
+    }
+
+    res.status(200).json(`User ${req.params.id} has been deleted`);
+
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 module.exports = router;
