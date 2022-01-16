@@ -43,7 +43,7 @@ const connectDb = async () => {
   // force: true allows drop if exists functionality to sequelize
   // leave force on false for better performance
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     app.listen(PORT, () => console.log(`App listening on port ${PORT}.`));
   } catch (error) {
     console.log("error starting server");
