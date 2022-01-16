@@ -6,6 +6,7 @@ class Post extends Model {}
 
 // create fields/columns for Post model
 Post.init(
+  // id | title | user_id | post_text
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,15 +18,15 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    post_url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      // Ensure that url is valid by setting to true
-      validate: {
-        isURL: true,
-      },
-    },
-    // This column determines who posted the news article
+    // post_url: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   // Ensure url is valid by setting to true
+    //   validate: {
+    //     isURL: true,
+    //   },
+    // },
+    // Who posted the news article
     user_id: {
       type: DataTypes.INTEGER,
       references: {

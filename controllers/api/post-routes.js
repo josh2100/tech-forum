@@ -4,47 +4,35 @@ const { Post, User, Vote, Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
 
 // Get all posts (api/posts/)
-router.get("/", (req, res) => {
-  Post.findAll({
-    attributes: [
-      "id",
-      "post_url",
-      "title",
-      "created_at",
-      [
-        sequelize.literal(
-          "(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)"
-        ),
-        "vote_count",
-      ],
-    ],
-
-    order: [["created_at", "DESC"]],
-
-    include: [
-      // include the Comment model here:
-      {
-        model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-        include: {
-          model: User,
-          attributes: ["username"],
+router.get("/", async (req, res) => {
+  // Get all posts
+  // render into handlebars template
+  try {
+    const allPosts = await Post.findAll({
+      // attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+         // id | title | user_id | post_text | date_created auto?
+      include: [
+        {
+          model: Post,
+          attributes: ["title"],
         },
-      },
-      {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-  })
-    .then((dbPostData) => res.json(dbPostData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+      ],
     });
+
+    // What does this line do?
+    // const posts = allPosts.map((post) => post.get({ plain: true }));
+
+    // res.render("homepage", {
+    //   posts,
+    //   loggedIn: req.session.loggedIn,
+    // });
+    res.status(200).json(allPosts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
-// Get a specific post by id (api/posts/:id)
+// Read a single post by id api/categories/:id
 router.get("/:id", (req, res) => {
   Post.findOne({
     where: {
@@ -90,20 +78,25 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// Make a new post
-router.post("/", withAuth, (req, res) => {
-  // expects {title: 'Taskmaster goes public!',
-  // post_url: 'https://taskmaster.com/press', user_id: 1}
-  Post.create({
-    title: req.body.title,
-    post_url: req.body.post_url,
-    user_id: req.session.user_id,
-  })
-    .then((dbPostData) => res.json(dbPostData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+// DOES NOT WORK
+// Create new post api/posts/
+// router.post("/", withAuth, async (req, res) => {
+router.post("/", async (req, res) => {
+  // expects {title: 'Aliens!',
+  // post_text: 'What!?', user_id: 1}
+  try {
+    const onePost = await Post.create({
+      // id | title | user_id | post_text | date_created auto?
+      title: req.body.title,
+      post_text: req.body.post_text,
+      // user_id: req.session.user_id,
     });
+
+    // res.status(200).json(onePost)
+    res.status(200).json(`Post added: ${onePost.title}`)
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 // PUT /api/posts/upvote (upvote a post)
