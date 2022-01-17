@@ -14,6 +14,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get one comment at api/comments:id
+router.get("/:id", async (req, res) => {
+  try {
+    const oneComment = await Comment.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    ////// Section does not work
+    if (!oneComment) {
+      res.status(404).json({ message: "No comment found with that id" });
+    }
+    /////////
+
+    res.status(200).json(oneComment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // Create new comment api/comments
 // router.post("/", withAuth, (req, res) => {
 router.post("/", async (req, res) => {
