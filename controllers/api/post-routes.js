@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}); 
+});
 
 // Read a single post by id api/categories/:id
 router.get("/:id", async (req, res) => {
@@ -66,30 +66,58 @@ router.post("/", async (req, res) => {
 
 // Update a post title (api/posts/:id)
 // router.put("/:id", withAuth, (req, res) => {
-router.put("/:id", (req, res) => {
-  Post.update(
-    /// Replace with new title
-    {
-      title: req.body.title,
-    },
-    {
-      // At the id specified in the url
-      where: {
-        id: req.params.id,
+// router.put("/:id", (req, res) => {
+//   Post.update(
+//     /// Replace with new title
+//     {
+//       title: req.body.title,
+//     },
+//     {
+//       // At the id specified in the url
+//       where: {
+//         id: req.params.id,
+//       },
+//     }
+//   )
+//     .then((dbPostData) => {
+//       if (!dbPostData) {
+//         res.status(404).json({ message: "No post found with this id" });
+//         return;
+//       }
+//       res.json(dbPostData);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
+
+// Update a post title (api/posts/:id)
+// router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedPost = await Post.update(
+      /// Replace with new title
+      {
+        title: req.body.title,
       },
-    }
-  )
-    .then((dbPostData) => {
-      if (!dbPostData) {
-        res.status(404).json({ message: "No post found with this id" });
-        return;
+      {
+        // At the id specified in the url
+        where: {
+          id: req.params.id,
+        },
       }
-      res.json(dbPostData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+    );
+
+    if (!updatedPost) {
+      res.status(404).json({ message: "No post found with this id" });
+      return;
+    }
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 // Delete a post (api/posts/:id)
