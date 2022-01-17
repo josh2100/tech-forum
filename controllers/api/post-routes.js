@@ -65,7 +65,8 @@ router.post("/", async (req, res) => {
 });
 
 // Update a post title (api/posts/:id)
-router.put("/:id", withAuth, (req, res) => {
+// router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", (req, res) => {
   Post.update(
     /// Replace with new title
     {
