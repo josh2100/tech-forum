@@ -66,34 +66,6 @@ router.post("/", async (req, res) => {
 
 // Update a post title (api/posts/:id)
 // router.put("/:id", withAuth, (req, res) => {
-// router.put("/:id", (req, res) => {
-//   Post.update(
-//     /// Replace with new title
-//     {
-//       title: req.body.title,
-//     },
-//     {
-//       // At the id specified in the url
-//       where: {
-//         id: req.params.id,
-//       },
-//     }
-//   )
-//     .then((dbPostData) => {
-//       if (!dbPostData) {
-//         res.status(404).json({ message: "No post found with this id" });
-//         return;
-//       }
-//       res.json(dbPostData);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
-
-// Update a post title (api/posts/:id)
-// router.put("/:id", withAuth, (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const updatedPost = await Post.update(
