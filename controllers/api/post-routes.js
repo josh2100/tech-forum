@@ -11,12 +11,12 @@ router.get("/", async (req, res) => {
     const allPosts = await Post.findAll({
       // attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
          // id | title | user_id | post_text | date_created auto?
-      include: [
-        {
-          model: Post,
-          attributes: ["title"],
-        },
-      ],
+      // include: [
+      //   {
+      //     model: Post,
+      //     attributes: ["title"],
+      //   },
+      // ],
     });
 
     // What does this line do?
@@ -78,41 +78,22 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// DOES NOT WORK
 // Create new post api/posts/
 // router.post("/", withAuth, async (req, res) => {
 router.post("/", async (req, res) => {
   // expects {title: 'Aliens!',
   // post_text: 'What!?', user_id: 1}
   try {
-    const onePost = await Post.create({
+    const newPost = await Post.create({
       // id | title | user_id | post_text | date_created auto?
       title: req.body.title,
       post_text: req.body.post_text,
       // user_id: req.session.user_id,
     });
 
-    // res.status(200).json(onePost)
-    res.status(200).json(`Post added: ${onePost.title}`)
+    res.status(200).json(`Post added: ${newPost.title}`)
   } catch (error) {
     res.status(500).json(error);
-  }
-});
-
-// PUT /api/posts/upvote (upvote a post)
-router.put("/upvote", withAuth, (req, res) => {
-  // Check that session exists
-  if (req.session) {
-    // Pass session id along with all destructured properties on req.body
-    Post.upvote(
-      { ...req.body, user_id: req.session.user_id },
-      { Vote, Comment, User }
-    )
-      .then((updatedVoteData) => res.json(updatedVoteData))
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
   }
 });
 

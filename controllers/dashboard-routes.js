@@ -1,51 +1,26 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const { Post, User, Comment, Vote } = require("../models");
+const { Post, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
-// get all posts for dashboard
-router.get("/", withAuth, (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   console.log(req.session);
   console.log("======================");
-  Post.findAll({
+  try {
+    const allPosts = await Post.findAll({
+    // Finds all posts where id matches whomever is logged in
     where: {
       user_id: req.session.user_id,
     },
-    attributes: [
-      "id",
-      "post_url",
-      "title",
-      "created_at",
-      [
-        sequelize.literal(
-          "(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)"
-        ),
-        "vote_count",
-      ],
-    ],
-    include: [
-      {
-        model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-        include: {
-          model: User,
-          attributes: ["username"],
-        },
-      },
-      {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-  })
-    .then((dbPostData) => {
-      const posts = dbPostData.map((post) => post.get({ plain: true }));
-      res.render("dashboard", { posts, loggedIn: true });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  });
+
+  // How does this work? 
+  const postsMap = allPosts.map((post) => post.get({ plain: true }));
+  res.render("dashboard", { postsMap, loggedIn: true });
+
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 router.get("/edit/:id", withAuth, (req, res) => {

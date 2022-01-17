@@ -5,11 +5,11 @@ const { User, Post, Comment } = require("../../models");
 router.get("/", async (req, res) => {
   try {
     const allUsers = await User.findAll({});
-
+///////// this section does nothing
     if (!allUsers) {
       res.status(404).json({ message: "No users found" });
     }
-
+////////////
     res.status(200).json(allUsers);
   } catch (error) {
     res.status(500).json(error);
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
       password: req.body.password,
     });
 
-    res.status(200).json(newUser);
+    res.status(200).json(`User ${newUser.username} has been created`);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -117,7 +117,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "No user found with this id" });
       return;
     }
-    // res.json(updatedUser);
+
     res.status(200).json(`User ${req.params.id} has been updated`);
   } catch (error) {
     res.status(500).json(error);
