@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
       ],
     });
 
-    // What does this line do?
+    // Serializes the sequelize data
     const posts = allPosts.map((post) => post.get({ plain: true }));
 
     res.render("homepage", {

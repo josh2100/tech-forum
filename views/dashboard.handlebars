@@ -1,35 +1,32 @@
-<article>
-  <a href="/dashboard"> &larr; Back to dashboard</a>
-  <h2>
-    Edit Post
-  </h2>
-  <form class="edit-post-form">
+<section>
+  <h2>Create New Post</h2>
+
+  <form class="new-post-form">
     <div>
-      <input name="post-title" type="text" value="{{post.title}}" />
-      <span>({{format_url post.post_url}})</span>
+      <label for="post-title">Title</label>
+      <input type="text" id="post-title" name="post-title" />
     </div>
     <div>
-       by you on {{format_date post.created_at}}
-      |
-      <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
+      <label for="post-text">Post Text</label>
+      {{!-- <input type="text" id="post-text" name="posttext" /> --}}
+      <textarea type="text" id="post-text" name="post-text"></textarea>
     </div>
-    <button type="submit">Save post</button>
-    <button type="button" class="delete-post-btn">Delete post</button>
+    <button type="submit" class="btn">Create</button>
   </form>
-</article>
+</section>
 
-<form class="comment-form">
-  <div>
-    <textarea name="comment-body"></textarea>
-  </div>
+{{#if postsMap.length}}
+<section>
+  <h2>Your posts</h2>
+  <ol>
+    {{#each postsMap as |post|}}
+    <li>
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+    </li>
+    {{/each}}
+  </ol>
+</section>
+{{/if}}
 
-  <div>
-    <button type="submit">add comment</button>
-  </div>
-</form>
-
-{{> comments post.comments}}
-
-<script src="/javascript/edit-post.js"></script>
-<script src="/javascript/delete-post.js"></script>
-<script src="/javascript/comment.js"></script>
+<script src="/javascript/add-post.js"></script>

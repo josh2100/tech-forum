@@ -3,6 +3,7 @@ const sequelize = require("../config/connection");
 const { Post, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
+// Read all posts by a user /dashboard
 router.get("/", withAuth, async (req, res) => {
   console.log(req.session);
   console.log("======================");
@@ -14,9 +15,9 @@ router.get("/", withAuth, async (req, res) => {
     },
   });
 
-  // How does this work? 
   const postsMap = allPosts.map((post) => post.get({ plain: true }));
   res.render("dashboard", { postsMap, loggedIn: true });
+  console.log(postsMap);
 
   } catch (error) {
     res.status(500).json(error);

@@ -11,12 +11,12 @@ router.get("/", async (req, res) => {
     const allPosts = await Post.findAll({
       // attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
       // id | title | user_id | post_text | date_created auto?
-      // include: [
-      //   {
-      //     model: Post,
-      //     attributes: ["title"],
-      //   },
-      // ],
+      include: [
+        {
+          model: Comment,
+          attributes: ["comment_text"],
+        },
+      ],
     });
 
     res.status(200).json(allPosts);
@@ -50,12 +50,18 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // expects {title: 'Aliens!',
   // post_text: 'What!?', user_id: 1}
+  // id | title | user_id | post_text
+  console.log("============================");
+  console.log(`line 54 ${req.session.user_id}`);
+  console.log(`line 54 ${req.body.post_text}`);
+  console.log(`line 54 ${req.body.title}`);
+
   try {
     const newPost = await Post.create({
       // id | title | user_id | post_text | date_created auto?
       title: req.body.title,
       post_text: req.body.post_text,
-      // user_id: req.session.user_id,
+      user_id: req.session.user_id,
     });
 
     res.status(200).json(`Post added: ${newPost.title}`);
