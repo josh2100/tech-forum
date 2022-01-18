@@ -13,14 +13,12 @@ router.get("/", withAuth, async (req, res) => {
     where: {
       user_id: req.session.user_id,
     },
-// test area
     attributes: [
       "id",
       "post_text",
       "title",
       "created_at",
     ],
-// testarea
     include: [
       {
         model: Comment,

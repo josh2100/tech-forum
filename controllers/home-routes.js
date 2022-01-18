@@ -4,11 +4,11 @@ const { Post, User, Comment } = require("../models");
 
 // READ all posts for homepage
 router.get("/", async (req, res) => {
-// Get all posts
-// render into handlebars template
+  // Get all posts id | title | user_id | post_text
+  // render into handlebars template
   try {
     const allPosts = await Post.findAll({
-      // attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+      attributes: ["id", "title", "post_text", "user_id", "created_at"],
       include: [
         {
           model: Comment,
@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
       loggedIn: req.session.loggedIn,
     });
 
-
     // res.status(200).json(posts);
   } catch (error) {
     res.status(500).json(error);
@@ -33,9 +32,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get single post
-router.get("/post/:id", (req, res) => {
-
-});
+router.get("/post/:id", (req, res) => {});
 
 router.get("/login", (req, res) => {
   if (req.session.loggedIn) {
