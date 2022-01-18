@@ -13,6 +13,28 @@ router.get("/", withAuth, async (req, res) => {
     where: {
       user_id: req.session.user_id,
     },
+// test area
+    attributes: [
+      "id",
+      "post_text",
+      "title",
+      "created_at",
+    ],
+// testarea
+    include: [
+      {
+        model: Comment,
+        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      },
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
   });
 
   const postsMap = allPosts.map((post) => post.get({ plain: true }));
