@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get single post
+// Get single post ///////HEREEEEEE!!!
 router.get("/post/:id", (req, res) => {});
 
 router.get("/login", (req, res) => {

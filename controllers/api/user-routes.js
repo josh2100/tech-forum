@@ -50,7 +50,17 @@ router.post("/", async (req, res) => {
       password: req.body.password,
     });
 
+    req.session.save(() => {
+      req.session.user_id = newUser.id;
+      req.session.username = newUser.username;
+      req.session.loggedIn = true;
+
     res.status(200).json(`User ${newUser.username} has been created`);
+    });
+
+    console.log("=========================")
+
+
   } catch (error) {
     res.status(500).json(error);
   }
@@ -85,6 +95,8 @@ router.post("/login", async (req, res) => {
 
       res.json({ user: existingUser, message: "You are now logged in!" });
     });
+
+
   } catch (error) {
     res.status(500).json(error);
   }

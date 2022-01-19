@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Read a single post by id api/categories/:id
+// Read a single post by id api/posts/:id
 router.get("/:id", async (req, res) => {
   try {
     const onePost = await Post.findOne({
@@ -51,10 +51,10 @@ router.post("/", async (req, res) => {
   // expects {title: 'Aliens!',
   // post_text: 'What!?', user_id: 1}
   // id | title | user_id | post_text
-  console.log("============================");
-  console.log(`line 54 ${req.session.user_id}`);
-  console.log(`line 54 ${req.body.post_text}`);
-  console.log(`line 54 ${req.body.title}`);
+  // console.log("============================");
+  // console.log(`line 54 ${req.session.user_id}`);
+  // console.log(`line 54 ${req.body.post_text}`);
+  // console.log(`line 54 ${req.body.title}`);
 
   try {
     const newPost = await Post.create({
