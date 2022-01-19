@@ -9,13 +9,23 @@ router.get("/", async (req, res) => {
   // render into handlebars template
   try {
     const allPosts = await Post.findAll({
-      // attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+      attributes: ["id", "post_text", "user_id", "created_at"],
       // id | title | user_id | post_text | date_created auto?
       include: [
         {
           model: Comment,
           attributes: ["comment_text"],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
+        ////test here
+        {
+          model: User,
+          attributes: ["username"],
+        },
+        ////
       ],
     });
 
@@ -115,8 +125,8 @@ router.delete("/:id", async (req, res) => {
 
     res.status(200).json(`Post ${req.params.id} has been deleted`);
   } catch (error) {
-    console.log(err);
-    res.status(500).json(err);
+    console.log(error);
+    res.status(500).json(error);
   }
 });
 
