@@ -1,5 +1,9 @@
 {
-    "scripts": {
+  "name": "tech-forum",
+  "version": "1.0.0",
+  "description": "CMS style blog site for technology discussion",
+  "main": "server.js",
+  "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
@@ -10,5 +14,16 @@
     "express-handlebars": "^6.0.2",
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josh2100/tech-forum.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josh2100/tech-forum/issues"
+  },
+  "homepage": "https://github.com/josh2100/tech-forum#readme"
 }
