@@ -28,3 +28,12 @@ Post.hasMany(Comment, {
 });
 
 module.exports = { User, Post, Comment };
+
+// Error: user.hasMany called with something that's not a 
+//subclass of Sequelize.Model
+
+//What is a subclass?
+
+// What is circular dependency?
+
+// cannot delete or update a parent row

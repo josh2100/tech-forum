@@ -87,7 +87,7 @@ router.post("/login", async (req, res) => {
       res.status(400).json({ message: "Incorrect password!" });
       return;
     }
-
+    /// save method allows us to save variables
     req.session.save(() => {
       req.session.user_id = existingUser.id;
       req.session.username = existingUser.username;

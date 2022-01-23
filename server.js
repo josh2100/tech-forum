@@ -15,15 +15,23 @@ const PORT = process.env.PORT || 3001;
 
 // Session requirements
 const sess = {
-  secret: "Super secret secret",
+  // secret: "Super secret secret",
+  secret: "secret",
   cookie: {},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize,
   }),
+//   cookie: {
+//     expires: 120000
+// }
 };
 
+// Session live on the server
+// Cookies live in the user's browser
+
+// adds session to request object
 app.use(session(sess));
 
 // Handlebars methods

@@ -12,7 +12,15 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: Comment,
-          // attributes: ["id"],
+          attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
+        },
+        {
+          model: User,
+          attributes: ["username"],
         },
       ],
     });
@@ -25,13 +33,14 @@ router.get("/", async (req, res) => {
       loggedIn: req.session.loggedIn,
     });
 
+    // main.handlebars is default
     // res.status(200).json(posts);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-// Get single post post/:id  //////HEREEEEEE!!!
+// Get single post post/:id
 router.get("/post/:id", (req, res) => {
   Post.findOne({
     where: {

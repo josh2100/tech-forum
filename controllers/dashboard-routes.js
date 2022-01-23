@@ -35,9 +35,12 @@ router.get("/", withAuth, async (req, res) => {
     ],
   });
 
+
   const postsMap = allPosts.map((post) => post.get({ plain: true }));
-  res.render("dashboard", { postsMap, loggedIn: true });
   console.log(postsMap);
+
+  res.render("dashboard", { postsMap, loggedIn: true });
+
 
   } catch (error) {
     res.status(500).json(error);
@@ -46,6 +49,13 @@ router.get("/", withAuth, async (req, res) => {
 
 router.get("/edit/:id", withAuth, (req, res) => {
   Post.findByPk(req.params.id, {
+    attributes: [
+      "id",
+      "title",
+      "created_at",
+      "post_text"
+    ],
+    
     include: [
       {
         model: Comment,

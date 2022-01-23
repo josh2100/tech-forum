@@ -5,14 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TECH FORUM</title>
+      <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
-<body>
-  <div class="wrapper">
-    <header>
+{{!-- <body> --}}
+  <body class="bg-dark"></body>
+  <div class="wrapper container-fluid ">
+    
+    <header class="row bg-success">
       <h1>
-        <a href="/">TECH FORUM</a>
+        <a href="/" class="col-12">TECH FORUM</a>
       </h1>
       <nav>
         {{#if loggedIn}}
@@ -23,6 +29,9 @@
         {{/if}}
       </nav>
     </header>
+
+
+
     <main>
       {{{ body }}}
     </main>

@@ -1,16 +1,24 @@
 <article class="post">
-  <div class="title">
+<a href="/post/{{id}}">
+
+  <div class="title text-white">
     <div>{{title}}</div>
-    {{!-- Make post text link to /post/id --}}
     <span>{{post_text}}</span>
   </div>
-  <div class="meta">
+  <div class="meta text-white">
     by
     {{user.username}}
     on
     {{format_date created_at}}
     |
-    <a href="/post/{{id}}">{{comments.length}}
-      {{format_plural "comment" comments.length}}</a>
+
+      <div>{{comments.length}}
+      {{format_plural "comment" comments.length}}</div>
   </div>
+
+</a>
+
+
 </article>
+
+
