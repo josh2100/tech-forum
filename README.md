@@ -19,8 +19,9 @@ Install MySQL on your machine. Use "npm install" to install required modules for
 
 ## Usage
 
-Make a user and a password
-Write, edit, and delete posts
+Make a user and a password.
+Write, edit, and delete posts from Dashboard page.
+View all posts on the homepage by clicking the main heading. 
 
 ## License
 
